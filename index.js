@@ -29,14 +29,91 @@ let connectedClients = [];
 //Note: These are (probably) not all the required routes, nor are the ones present all completed.
 //But they are a decent starting point for the routes you'll probably need
 
-app.ws('/ws', (socket, request) => {    
+app.ws('/ws', (socket, request) => {
+    const username = request.session.username;
+
+    if (!username) {
+        socket.close();
+        return;
+    }
+
+    const client = {
+        socket,
+        username
+    };
+
+    connectedClients.push(client);
+
+    socket.send(JSON.stringify({
+        type: 'connected',
+        username
+    }));
+
+    connectedClients.forEach((existingClient) => {
+        if (
+            existingClient.socket !== socket &&
+            existingClient.socket.readyState === 1
+        ) {
+            socket.send(JSON.stringify({
+                type: 'user_connected',
+                username: existingClient.username
+            }));
+        }
+    });
+
+    connectedClients.forEach((client) => {
+        if (client.socket !== socket && client.socket.readyState === 1) {
+            client.socket.send(JSON.stringify({
+                type: 'user_connected',
+                username
+            }));
+        }
+    });
+
     socket.on('message', (rawMessage) => {
-        const parsedMessage = JSON.parse(rawMessage);
-        
+        try {
+            const parsedMessage = JSON.parse(rawMessage);
+
+            if (parsedMessage.type !== 'message') {
+                return;
+            }
+
+            const message = String(parsedMessage.message || '').trim();
+
+            if (!message) {
+                return;
+            }
+
+            const chatMessage = {
+                type: 'message',
+                username,
+                timestamp: new Date().toISOString(),
+                message
+            };
+
+            connectedClients.forEach((client) => {
+                if (client.socket.readyState === 1) {
+                    client.socket.send(JSON.stringify(chatMessage));
+                }
+            });
+        } catch (error) {
+            console.error('WebSocket message error:', error);
+        }
     });
 
     socket.on('close', () => {
-        
+        connectedClients = connectedClients.filter(
+            (client) => client.socket !== socket
+        );
+
+        connectedClients.forEach((client) => {
+            if (client.socket.readyState === 1) {
+                client.socket.send(JSON.stringify({
+                    type: 'user_disconnected',
+                    username
+                }));
+            }
+        });
     });
 });
 

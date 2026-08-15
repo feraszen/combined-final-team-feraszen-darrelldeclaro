@@ -1,12 +1,59 @@
-<div class="main-content">
-    <h1>Live Chat</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Chat</title>
+</head>
+<body>
 
-    <form action="/logout" method="post">
-        <button type="submit">Logout</button>
-    </form>
+    <div class="main-content">
+        <h1>Live Chat</h1>
 
-    <div class="chat-widget">
+        <p>
+            <a href="/profile">Profile</a>
+        </p>
+
+        <form action="/logout" method="post">
+            <button type="submit">Logout</button>
+        </form>
+
+        <hr>
+
+        <h2>Online Users</h2>
+
+        <ul id="user-list"></ul>
+
+        <h2>Messages</h2>
+
+        <div
+            id="chat-messages"
+            style="
+                border: 1px solid #ccc;
+                min-height: 300px;
+                padding: 10px;
+                margin-bottom: 10px;
+                overflow-y: auto;
+            "
+        ></div>
+
+        <form id="message-form">
+            <input
+                type="text"
+                id="message-input"
+                name="message"
+                placeholder="Type a message..."
+                autocomplete="off"
+                required
+            >
+
+            <button type="submit">Send</button>
+        </form>
+
+        <p id="connection-status">Connecting...</p>
     </div>
-</div>
 
-<script src="/frontend.js" type="application/javascript"></script>
+    <script src="/frontend.js" type="application/javascript"></script>
+
+</body>
+</html>
