@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 const User = require('./models/User');
+const Message = require('./models/Message');
 const requireAuth = require('./middleware/auth');
 
 const PORT = 3000;
@@ -70,7 +71,7 @@ app.ws('/ws', (socket, request) => {
         }
     });
 
-    socket.on('message', (rawMessage) => {
+    socket.on('message', async (rawMessage) => {
         try {
             const parsedMessage = JSON.parse(rawMessage);
 
@@ -84,11 +85,16 @@ app.ws('/ws', (socket, request) => {
                 return;
             }
 
+            const savedMessage = await Message.create({
+                username,
+                message
+            });
+
             const chatMessage = {
                 type: 'message',
-                username,
-                timestamp: new Date().toISOString(),
-                message
+                username: savedMessage.username,
+                timestamp: savedMessage.timestamp.toISOString(),
+                message: savedMessage.message
             };
 
             connectedClients.forEach((client) => {
@@ -208,7 +214,21 @@ app.post('/signup', async (request, response) => {
 });
 
 app.get('/dashboard', requireAuth, async (request, response) => {
-    return response.render('index/authenticated');
+    try {
+        const messages = await Message.find()
+            .sort({ timestamp: 1 })
+            .limit(100);
+
+        return response.render('index/authenticated', {
+            messages
+        });
+    } catch (error) {
+        console.error('Error loading messages:', error);
+
+        return response.render('index/authenticated', {
+            messages: []
+        });
+    }
 });
 
 app.get('/profile', requireAuth, async (request, response) => {
