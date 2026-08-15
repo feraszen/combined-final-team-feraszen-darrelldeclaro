@@ -4,6 +4,8 @@ const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
+const User = require('./models/User');
+const requireAuth = require('./middleware/auth');
 
 const PORT = 3000;
 //TODO: Replace with the URI pointing to your own MongoDB setup
@@ -43,23 +45,124 @@ app.get('/', async (request, response) => {
 });
 
 app.get('/login', async (request, response) => {
-    
+    return response.render('login', {
+        errorMessage: null
+    });
+});
+
+app.post('/login', async (request, response) => {
+    try {
+        const { username, password } = request.body;
+
+        if (!username || !password) {
+            return response.render('login', {
+                errorMessage: 'Username and password are required.'
+            });
+        }
+
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return response.render('login', {
+                errorMessage: 'Invalid username or password.'
+            });
+        }
+
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if (!passwordMatch) {
+            return response.render('login', {
+                errorMessage: 'Invalid username or password.'
+            });
+        }
+
+        request.session.userId = user._id;
+        request.session.username = user.username;
+        request.session.role = user.role;
+
+        return response.redirect('/dashboard');
+
+    } catch (error) {
+        console.error(error);
+
+        return response.render('login', {
+            errorMessage: 'An error occurred during login.'
+        });
+    }
 });
 
 app.get('/signup', async (request, response) => {
-    return response.render('signup');
+    return response.render('signup', { errorMessage: null });
 });
 
-app.get('/dashboard', async (request, response) => {
+app.post('/signup', async (request, response) => {
+    try {
+        const { username, password } = request.body;
+
+        if (!username || !password) {
+            return response.render('signup', {
+                errorMessage: 'Username and password are required.'
+            });
+        }
+
+        const existingUser = await User.findOne({ username });
+
+        if (existingUser) {
+            return response.render('signup', {
+                errorMessage: 'Username already exists.'
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        await User.create({
+            username,
+            password: hashedPassword
+        });
+
+        return response.redirect('/login');
+    } catch (error) {
+        console.error(error);
+
+        return response.render('signup', {
+            errorMessage: 'An error occurred during signup.'
+        });
+    }
+});
+
+app.get('/dashboard', requireAuth, async (request, response) => {
     return response.render('index/authenticated');
 });
 
-app.get('/profile', async (request, response) => {
-    
+app.get('/profile', requireAuth, async (request, response) => {
+    try {
+        const user = await User.findById(request.session.userId);
+
+        if (!user) {
+            return request.session.destroy(() => {
+                response.redirect('/login');
+            });
+        }
+
+        return response.render('profile', {
+            username: user.username,
+            joinDate: user.createdAt.toLocaleDateString()
+        });
+    } catch (error) {
+        console.error('Profile error:', error);
+        return response.status(500).send('Unable to load profile.');
+    }
 });
 
 app.post('/logout', (request, response) => {
+    request.session.destroy((error) => {
+        if (error) {
+            console.error('Logout error:', error);
+            return response.status(500).send('Unable to log out.');
+        }
 
+        return response.redirect('/login');
+    });
 });
 
 mongoose.connect(MONGO_URI)
