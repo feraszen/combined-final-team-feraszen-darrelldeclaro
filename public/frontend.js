@@ -124,7 +124,10 @@ function onUserConnected(userId, username) {
         return;
     }
 
-    connectedUsers.set(userId, username);
+    connectedUsers.set(
+        userId,
+        username
+    );
 
     updateUserList();
 }
@@ -164,10 +167,32 @@ function updateUserList() {
         const listItem =
             document.createElement("li");
 
-        listItem.textContent = username;
+        listItem.textContent =
+            username;
 
-        userList.appendChild(listItem);
+        userList.appendChild(
+            listItem
+        );
     });
+}
+
+
+/*
+ * Remove the empty-state message when chat activity begins.
+ */
+function removeEmptyStateMessage() {
+    const emptyState =
+        Array.from(
+            chatMessages.querySelectorAll("p")
+        ).find(
+            (element) =>
+                element.textContent.trim() ===
+                "No messages yet."
+        );
+
+    if (emptyState) {
+        emptyState.remove();
+    }
 }
 
 
@@ -179,11 +204,15 @@ function onNewMessageReceived(
     timestamp,
     message
 ) {
+    removeEmptyStateMessage();
+
     const messageContainer =
         document.createElement("div");
 
     const time =
-        new Date(timestamp).toLocaleTimeString();
+        new Date(
+            timestamp
+        ).toLocaleTimeString();
 
     const usernameElement =
         document.createElement("strong");
@@ -228,6 +257,8 @@ function onNewMessageReceived(
  * Display a system message in the chat.
  */
 function addSystemMessage(message) {
+    removeEmptyStateMessage();
+
     const systemMessage =
         document.createElement("p");
 
