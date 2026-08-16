@@ -49,7 +49,9 @@ let connectedClients = [];
  */
 function getOnlineUserCount() {
     return new Set(
-        connectedClients.map((client) => client.username)
+        connectedClients.map(
+            (client) => client.userId
+        )
     ).size;
 }
 
@@ -61,6 +63,10 @@ app.ws('/ws', (socket, request) => {
     const username = request.session.username;
     const userId = request.session.userId;
 
+    /*
+     * Only authenticated users with a valid session can
+     * establish a WebSocket connection.
+     */
     if (!username || !userId) {
         socket.close();
         return;
@@ -74,10 +80,14 @@ app.ws('/ws', (socket, request) => {
 
     connectedClients.push(client);
 
+    /*
+     * Confirm the current user's WebSocket connection.
+     */
     socket.send(
         JSON.stringify({
             type: 'connected',
-            username
+            username,
+            userId: client.userId
         })
     );
 
@@ -92,7 +102,8 @@ app.ws('/ws', (socket, request) => {
             socket.send(
                 JSON.stringify({
                     type: 'user_connected',
-                    username: existingClient.username
+                    username: existingClient.username,
+                    userId: existingClient.userId
                 })
             );
         }
@@ -101,22 +112,24 @@ app.ws('/ws', (socket, request) => {
     /*
      * Notify existing users that a new user has connected.
      */
-    connectedClients.forEach((client) => {
+    connectedClients.forEach((existingClient) => {
         if (
-            client.socket !== socket &&
-            client.socket.readyState === 1
+            existingClient.socket !== socket &&
+            existingClient.socket.readyState === 1
         ) {
-            client.socket.send(
+            existingClient.socket.send(
                 JSON.stringify({
                     type: 'user_connected',
-                    username
+                    username,
+                    userId: client.userId
                 })
             );
 
-            client.socket.send(
+            existingClient.socket.send(
                 JSON.stringify({
                     type: 'user_joined',
-                    username
+                    username,
+                    userId: client.userId
                 })
             );
         }
@@ -149,17 +162,22 @@ app.ws('/ws', (socket, request) => {
             const chatMessage = {
                 type: 'message',
                 username: savedMessage.username,
-                timestamp: savedMessage.timestamp.toISOString(),
+                timestamp:
+                    savedMessage.timestamp.toISOString(),
                 message: savedMessage.message
             };
 
-            connectedClients.forEach((client) => {
-                if (client.socket.readyState === 1) {
-                    client.socket.send(
-                        JSON.stringify(chatMessage)
-                    );
+            connectedClients.forEach(
+                (connectedClient) => {
+                    if (
+                        connectedClient.socket.readyState === 1
+                    ) {
+                        connectedClient.socket.send(
+                            JSON.stringify(chatMessage)
+                        );
+                    }
                 }
-            });
+            );
         } catch (error) {
             console.error(
                 'WebSocket message error:',
@@ -172,32 +190,42 @@ app.ws('/ws', (socket, request) => {
      * Handle WebSocket disconnection.
      */
     socket.on('close', () => {
-        connectedClients = connectedClients.filter(
-            (client) => client.socket !== socket
-        );
+        connectedClients =
+            connectedClients.filter(
+                (connectedClient) =>
+                    connectedClient.socket !== socket
+            );
 
         /*
          * Do not announce that the user left if the same
          * user still has another active WebSocket connection.
          */
-        const userStillConnected = connectedClients.some(
-            (client) => client.username === username
-        );
+        const userStillConnected =
+            connectedClients.some(
+                (connectedClient) =>
+                    connectedClient.userId ===
+                    client.userId
+            );
 
         if (userStillConnected) {
             return;
         }
 
-        connectedClients.forEach((client) => {
-            if (client.socket.readyState === 1) {
-                client.socket.send(
-                    JSON.stringify({
-                        type: 'user_disconnected',
-                        username
-                    })
-                );
+        connectedClients.forEach(
+            (connectedClient) => {
+                if (
+                    connectedClient.socket.readyState === 1
+                ) {
+                    connectedClient.socket.send(
+                        JSON.stringify({
+                            type: 'user_disconnected',
+                            username: client.username,
+                            userId: client.userId
+                        })
+                    );
+                }
             }
-        });
+        );
     });
 });
 
@@ -206,9 +234,12 @@ app.ws('/ws', (socket, request) => {
  * Home page
  */
 app.get('/', async (request, response) => {
-    return response.render('index/unauthenticated', {
-        onlineUsers: getOnlineUserCount()
-    });
+    return response.render(
+        'index/unauthenticated',
+        {
+            onlineUsers: getOnlineUserCount()
+        }
+    );
 });
 
 
@@ -524,7 +555,9 @@ app.get(
             if (!user) {
                 return response
                     .status(404)
-                    .send('User profile not found.');
+                    .send(
+                        'User profile not found.'
+                    );
             }
 
             return response.render('profile', {
@@ -541,7 +574,9 @@ app.get(
 
             return response
                 .status(404)
-                .send('User profile not found.');
+                .send(
+                    'User profile not found.'
+                );
         }
     }
 );
