@@ -565,7 +565,7 @@ app.post('/logout', (request, response) => {
                 );
         }
 
-        return response.redirect('/login');
+        return response.redirect('/');
     });
 });
 
