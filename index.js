@@ -503,6 +503,41 @@ app.get(
     }
 );
 
+/*
+ * View another member's profile
+ */
+app.get(
+    '/profile/:id',
+    requireAuth,
+    async (request, response) => {
+        try {
+            const user = await User.findById(
+                request.params.id
+            ).select('username createdAt');
+
+            if (!user) {
+                return response
+                    .status(404)
+                    .send('User profile not found.');
+            }
+
+            return response.render('profile', {
+                username: user.username,
+                joinDate:
+                    user.createdAt.toLocaleDateString()
+            });
+        } catch (error) {
+            console.error(
+                'Other profile error:',
+                error
+            );
+
+            return response
+                .status(404)
+                .send('User profile not found.');
+        }
+    }
+);
 
 /*
  * Logout

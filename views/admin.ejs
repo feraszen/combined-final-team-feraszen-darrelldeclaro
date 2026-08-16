@@ -50,6 +50,10 @@
                             </td>
 
                             <td>
+                                <a href="/profile/<%= user._id %>">
+                                    View Profile
+                                </a>
+
                                 <% if (user._id.toString() !== userId) { %>
                                     <form
                                         action="/admin/users/<%= user._id %>/delete"
