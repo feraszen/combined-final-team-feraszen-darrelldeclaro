@@ -59,15 +59,17 @@ function getOnlineUserCount() {
  */
 app.ws('/ws', (socket, request) => {
     const username = request.session.username;
+    const userId = request.session.userId;
 
-    if (!username) {
+    if (!username || !userId) {
         socket.close();
         return;
     }
 
     const client = {
         socket,
-        username
+        username,
+        userId: userId.toString()
     };
 
     connectedClients.push(client);
@@ -330,7 +332,7 @@ app.post('/signup', async (request, response) => {
             password: hashedPassword
         });
 
-        return response.redirect('/login');
+        return response.redirect('/');
     } catch (error) {
         console.error(error);
 
@@ -506,6 +508,7 @@ app.get(
     }
 );
 
+
 /*
  * View another member's profile
  */
@@ -542,6 +545,7 @@ app.get(
         }
     }
 );
+
 
 /*
  * Logout
