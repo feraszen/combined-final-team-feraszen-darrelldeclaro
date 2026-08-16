@@ -27,27 +27,27 @@
         <h2>Messages</h2>
 
         <div
-    id="chat-messages"
-    style="
-        border: 1px solid #ccc;
-        min-height: 300px;
-        padding: 10px;
-        margin-bottom: 10px;
-        overflow-y: auto;
-    "
->
-    <% if (messages && messages.length > 0) { %>
-        <% messages.forEach((message) => { %>
-            <div>
-                <strong><%= message.username %>: </strong>
-                <span><%= message.message %></span>
-                <small>
-                    (<%= new Date(message.timestamp).toLocaleTimeString() %>)
-                </small>
-            </div>
-        <% }) %>
-    <% } %>
-</div>
+            id="chat-messages"
+            style="
+                border: 1px solid #ccc;
+                min-height: 300px;
+                padding: 10px;
+                margin-bottom: 10px;
+                overflow-y: auto;
+            "
+        >
+            <% if (messages && messages.length > 0) { %>
+                <% messages.forEach((message) => { %>
+                    <div>
+                        <strong><%= message.username %>: </strong>
+                        <span><%= message.message %></span>
+                        <small>
+                            (<%= new Date(message.timestamp).toLocaleTimeString() %>)
+                        </small>
+                    </div>
+                <% }) %>
+            <% } %>
+        </div>
 
         <form id="message-form">
             <input
