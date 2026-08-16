@@ -7,65 +7,103 @@
 </head>
 <body>
 
-    <div class="main-content">
+    <header>
         <h1>Live Chat</h1>
 
-        <p>
-            <a href="/profile">Profile</a>
-        </p>
+        <nav>
+            <a href="/dashboard">Chat</a>
+            |
+            <a href="/profile">My Profile</a>
+            |
+            <a href="/admin">Admin Dashboard</a>
+            |
+            <form action="/logout" method="post" style="display: inline;">
+                <button type="submit">Logout</button>
+            </form>
+        </nav>
+    </header>
 
-        <form action="/logout" method="post">
-            <button type="submit">Logout</button>
-        </form>
+    <hr>
+
+    <main>
+
+        <section>
+            <h2>Users Online</h2>
+
+            <p id="connection-status">Connecting...</p>
+
+            <ul id="user-list"></ul>
+        </section>
 
         <hr>
 
-        <h2>Online Users</h2>
+        <section>
+            <h2>Chat Messages</h2>
 
-        <ul id="user-list"></ul>
-
-        <h2>Messages</h2>
-
-        <div
-            id="chat-messages"
-            style="
-                border: 1px solid #ccc;
-                min-height: 300px;
-                padding: 10px;
-                margin-bottom: 10px;
-                overflow-y: auto;
-            "
-        >
-            <% if (messages && messages.length > 0) { %>
-                <% messages.forEach((message) => { %>
-                    <div>
-                        <strong><%= message.username %>: </strong>
-                        <span><%= message.message %></span>
-                        <small>
-                            (<%= new Date(message.timestamp).toLocaleTimeString() %>)
-                        </small>
-                    </div>
-                <% }) %>
-            <% } %>
-        </div>
-
-        <form id="message-form">
-            <input
-                type="text"
-                id="message-input"
-                name="message"
-                placeholder="Type a message..."
-                autocomplete="off"
-                required
+            <div
+                id="chat-messages"
+                style="
+                    border: 1px solid #ccc;
+                    padding: 10px;
+                    height: 400px;
+                    overflow-y: auto;
+                "
             >
+                <% if (messages && messages.length > 0) { %>
 
-            <button type="submit">Send</button>
-        </form>
+                    <% messages.forEach((message) => { %>
 
-        <p id="connection-status">Connecting...</p>
-    </div>
+                        <div>
+                            <strong><%= message.username %>:</strong>
 
-    <script src="/frontend.js" type="application/javascript"></script>
+                            <span>
+                                <%= message.message %>
+                            </span>
+
+                            <small>
+                                (<%= new Date(message.timestamp).toLocaleTimeString() %>)
+                            </small>
+                        </div>
+
+                    <% }) %>
+
+                <% } else { %>
+
+                    <p>No messages yet.</p>
+
+                <% } %>
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+
+            <form id="message-form">
+
+                <label for="message-input">
+                    Message:
+                </label>
+
+                <input
+                    type="text"
+                    id="message-input"
+                    name="message"
+                    autocomplete="off"
+                    required
+                >
+
+                <button type="submit">
+                    Send
+                </button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    <script src="/frontend.js"></script>
 
 </body>
 </html>

@@ -33,6 +33,10 @@ webSocket.addEventListener("message", (event) => {
                 onUserConnected(eventData.username);
                 break;
 
+            case "user_joined":
+                addSystemMessage(`${eventData.username} has joined the chat.`);
+                break;
+
             case "user_disconnected":
                 onUserDisconnected(eventData.username);
                 break;
@@ -48,6 +52,7 @@ webSocket.addEventListener("message", (event) => {
             default:
                 console.warn("Unknown WebSocket event:", eventData);
         }
+
     } catch (error) {
         console.error("Invalid WebSocket message:", error);
     }

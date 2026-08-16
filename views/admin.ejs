@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+
+    <div class="main-content">
+        <h1>Admin Dashboard</h1>
+
+        <p>
+            <a href="/dashboard">Chat</a>
+            |
+            <a href="/profile">My Profile</a>
+        </p>
+
+        <form action="/logout" method="post">
+            <button type="submit">Logout</button>
+        </form>
+
+        <hr>
+
+        <h2>Registered Users</h2>
+
+        <% if (users.length === 0) { %>
+            <p>No users registered.</p>
+        <% } else { %>
+
+            <table border="1" cellpadding="8">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Join Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% users.forEach((user) => { %>
+                        <tr>
+                            <td><%= user.username %></td>
+
+                            <td><%= user.role %></td>
+
+                            <td>
+                                <%= new Date(user.createdAt).toLocaleDateString() %>
+                            </td>
+
+                            <td>
+                                <% if (user._id.toString() !== userId) { %>
+                                    <form
+                                        action="/admin/users/<%= user._id %>/delete"
+                                        method="post"
+                                    >
+                                        <button type="submit">
+                                            Remove
+                                        </button>
+                                    </form>
+                                <% } else { %>
+                                    Current Admin
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+
+        <% } %>
+    </div>
+
+</body>
+</html>
