@@ -10,6 +10,11 @@
     <div class="main-content">
         <h1>Welcome to the Socket Chat</h1>
 
+        <p>
+            Users Online:
+            <span id="online-users"><%= onlineUsers %></span>
+        </p>
+
         <p>Please log in or create an account to continue.</p>
 
         <p>
@@ -22,6 +27,29 @@
             </a>
         </p>
     </div>
+
+    <script>
+        async function updateOnlineCount() {
+            try {
+                const response = await fetch('/online-count');
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch online user count.');
+                }
+
+                const data = await response.json();
+
+                document.getElementById('online-users').textContent =
+                    data.onlineUsers;
+            } catch (error) {
+                console.error('Online count error:', error);
+            }
+        }
+
+        updateOnlineCount();
+
+        setInterval(updateOnlineCount, 2000);
+    </script>
 
 </body>
 </html>
