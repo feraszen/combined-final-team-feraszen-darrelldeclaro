@@ -1,0 +1,25 @@
+<header>
+    <h1><%= pageTitle %></h1>
+
+    <nav>
+        <a href="/dashboard">Chat</a>
+        |
+        <a href="/profile">My Profile</a>
+
+        <% if (role === 'admin') { %>
+            |
+            <a href="/admin">Admin Dashboard</a>
+        <% } %>
+
+        |
+        <form
+            action="/logout"
+            method="post"
+            style="display: inline;"
+        >
+            <button type="submit">Logout</button>
+        </form>
+    </nav>
+</header>
+
+<hr>

@@ -7,23 +7,10 @@
 </head>
 <body>
 
-    <header>
-        <h1>Live Chat</h1>
-
-        <nav>
-            <a href="/dashboard">Chat</a>
-            |
-            <a href="/profile">My Profile</a>
-            |
-            <a href="/admin">Admin Dashboard</a>
-            |
-            <form action="/logout" method="post" style="display: inline;">
-                <button type="submit">Logout</button>
-            </form>
-        </nav>
-    </header>
-
-    <hr>
+    <%- include('../partials/header', {
+        pageTitle: 'Live Chat',
+        role: role
+    }) %>
 
     <main>
 

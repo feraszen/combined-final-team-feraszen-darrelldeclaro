@@ -369,7 +369,8 @@ app.get(
             return response.render(
                 'index/authenticated',
                 {
-                    messages
+                    messages,
+                    role: request.session.role
                 }
             );
         } catch (error) {
@@ -381,7 +382,8 @@ app.get(
             return response.render(
                 'index/authenticated',
                 {
-                    messages: []
+                    messages: [],
+                    role: request.session.role
                 }
             );
         }
@@ -486,7 +488,8 @@ app.get(
             return response.render('profile', {
                 username: user.username,
                 joinDate:
-                    user.createdAt.toLocaleDateString()
+                    user.createdAt.toLocaleDateString(),
+                role: request.session.role
             });
         } catch (error) {
             console.error(
@@ -524,7 +527,8 @@ app.get(
             return response.render('profile', {
                 username: user.username,
                 joinDate:
-                    user.createdAt.toLocaleDateString()
+                    user.createdAt.toLocaleDateString(),
+                role: request.session.role
             });
         } catch (error) {
             console.error(

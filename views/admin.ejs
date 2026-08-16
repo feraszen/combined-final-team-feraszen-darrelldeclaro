@@ -7,28 +7,23 @@
 </head>
 <body>
 
-    <div class="main-content">
-        <h1>Admin Dashboard</h1>
+    <%- include('partials/header', {
+        pageTitle: 'Admin Dashboard',
+        role: 'admin'
+    }) %>
 
-        <p>
-            <a href="/dashboard">Chat</a>
-            |
-            <a href="/profile">My Profile</a>
-        </p>
-
-        <form action="/logout" method="post">
-            <button type="submit">Logout</button>
-        </form>
-
-        <hr>
+    <main>
 
         <h2>Registered Users</h2>
 
         <% if (users.length === 0) { %>
+
             <p>No users registered.</p>
+
         <% } else { %>
 
             <table border="1" cellpadding="8">
+
                 <thead>
                     <tr>
                         <th>Username</th>
@@ -39,22 +34,35 @@
                 </thead>
 
                 <tbody>
-                    <% users.forEach((user) => { %>
-                        <tr>
-                            <td><%= user.username %></td>
 
-                            <td><%= user.role %></td>
+                    <% users.forEach((user) => { %>
+
+                        <tr>
 
                             <td>
-                                <%= new Date(user.createdAt).toLocaleDateString() %>
+                                <%= user.username %>
                             </td>
 
                             <td>
+                                <%= user.role %>
+                            </td>
+
+                            <td>
+                                <%= new Date(
+                                    user.createdAt
+                                ).toLocaleDateString() %>
+                            </td>
+
+                            <td>
+
                                 <a href="/profile/<%= user._id %>">
                                     View Profile
                                 </a>
 
-                                <% if (user._id.toString() !== userId) { %>
+                                <% if (
+                                    user._id.toString() !== userId
+                                ) { %>
+
                                     <form
                                         action="/admin/users/<%= user._id %>/delete"
                                         method="post"
@@ -63,17 +71,26 @@
                                             Remove
                                         </button>
                                     </form>
+
                                 <% } else { %>
+
                                     Current Admin
+
                                 <% } %>
+
                             </td>
+
                         </tr>
+
                     <% }) %>
+
                 </tbody>
+
             </table>
 
         <% } %>
-    </div>
+
+    </main>
 
 </body>
 </html>
