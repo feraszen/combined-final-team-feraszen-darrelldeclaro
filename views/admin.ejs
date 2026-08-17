@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" href="/styles.css">
 </head>
-<body>
+
+<body class="page-admin">
 
     <%- include('partials/header', {
         pageTitle: 'Admin Dashboard',
@@ -22,15 +27,17 @@
 
         <% } else { %>
 
-            <table border="1" cellpadding="8">
+            <table>
 
                 <thead>
+
                     <tr>
                         <th>Username</th>
                         <th>Role</th>
                         <th>Join Date</th>
                         <th>Action</th>
                     </tr>
+
                 </thead>
 
                 <tbody>
@@ -67,14 +74,18 @@
                                         action="/admin/users/<%= user._id %>/delete"
                                         method="post"
                                     >
+
                                         <button type="submit">
                                             Remove
                                         </button>
+
                                     </form>
 
                                 <% } else { %>
 
-                                    Current Admin
+                                    <span class="current-admin">
+                                        Current Admin
+                                    </span>
 
                                 <% } %>
 
@@ -93,4 +104,5 @@
     </main>
 
 </body>
+
 </html>

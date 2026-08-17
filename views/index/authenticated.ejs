@@ -3,92 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Live Chat</title>
+
+    <link rel="stylesheet" href="/styles.css">
 </head>
-<body>
+
+<body class="page-chat">
 
     <%- include('../partials/header', {
         pageTitle: 'Live Chat',
         role: role
     }) %>
 
-    <main>
+    <main class="chat-page">
 
-        <section>
-            <h2>Users Online</h2>
+        <div class="chat-layout">
 
-            <p id="connection-status">Connecting...</p>
+            <!-- Online Users -->
+            <aside class="online-panel">
 
-            <ul id="user-list"></ul>
-        </section>
+                <div class="panel-header">
+                    <h2>Users Online</h2>
 
-        <hr>
+                    <span class="online-badge">
+                        Online
+                    </span>
+                </div>
 
-        <section>
-            <h2>Chat Messages</h2>
+                <p
+                    id="connection-status"
+                    class="connection-status"
+                >
+                    Connecting...
+                </p>
 
-            <div
-                id="chat-messages"
-                style="
-                    border: 1px solid #ccc;
-                    padding: 10px;
-                    height: 400px;
-                    overflow-y: auto;
-                "
-            >
-                <% if (messages && messages.length > 0) { %>
+                <ul
+                    id="user-list"
+                    class="user-list"
+                ></ul>
 
-                    <% messages.forEach((message) => { %>
+            </aside>
 
-                        <div>
-                            <strong><%= message.username %>:</strong>
 
-                            <span>
-                                <%= message.message %>
-                            </span>
+            <!-- Chat Area -->
+            <section class="chat-panel">
 
-                            <small>
-                                (<%= new Date(message.timestamp).toLocaleTimeString() %>)
-                            </small>
-                        </div>
+                <div class="chat-panel-header">
 
-                    <% }) %>
+                    <div>
+                        <h2>Live Chat</h2>
 
-                <% } else { %>
+                        <p>
+                            Real-time conversation
+                        </p>
+                    </div>
 
-                    <p>No messages yet.</p>
+                </div>
 
-                <% } %>
-            </div>
-        </section>
 
-        <hr>
-
-        <section>
-
-            <form id="message-form">
-
-                <label for="message-input">
-                    Message:
-                </label>
-
-                <input
-                    type="text"
-                    id="message-input"
-                    name="message"
-                    autocomplete="off"
-                    required
+                <!-- Messages -->
+                <div
+                    id="chat-messages"
+                    class="chat-messages"
                 >
 
-                <button type="submit">
-                    Send
-                </button>
+                    <% if (messages && messages.length > 0) { %>
 
-            </form>
+                        <% messages.forEach((message) => { %>
 
-        </section>
+                            <div class="chat-message">
+
+                                <div class="message-content">
+
+                                    <strong class="message-username">
+                                        <%= message.username %>
+                                    </strong>
+
+                                    <span class="message-text">
+                                        <%= message.message %>
+                                    </span>
+
+                                </div>
+
+                                <small class="message-time">
+                                    <%= new Date(
+                                        message.timestamp
+                                    ).toLocaleTimeString() %>
+                                </small>
+
+                            </div>
+
+                        <% }) %>
+
+                    <% } else { %>
+
+                        <div class="empty-chat">
+
+                            <div class="empty-chat-icon">
+                                💬
+                            </div>
+
+                            <p>
+                                No messages yet.
+                            </p>
+
+                            <span>
+                                Start the conversation!
+                            </span>
+
+                        </div>
+
+                    <% } %>
+
+                </div>
+
+
+                <!-- Message Form -->
+                <form
+                    id="message-form"
+                    class="message-form"
+                >
+
+                    <label
+                        for="message-input"
+                        class="visually-hidden"
+                    >
+                        Message
+                    </label>
+
+                    <input
+                        type="text"
+                        id="message-input"
+                        name="message"
+                        placeholder="Type your message..."
+                        autocomplete="off"
+                        required
+                    >
+
+                    <button
+                        type="submit"
+                        class="send-button"
+                    >
+                        Send
+                    </button>
+
+                </form>
+
+            </section>
+
+        </div>
 
     </main>
+
 
     <script src="/frontend.js"></script>
 

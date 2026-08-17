@@ -1,30 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Profile</title>
+
+    <link rel="stylesheet" href="/styles.css">
 </head>
-<body>
+
+<body class="page-profile">
 
     <%- include('partials/header', {
-        pageTitle: 'Profile',
+        pageTitle: 'My Profile',
         role: role
     }) %>
 
     <main>
 
-        <p>
-            <strong>Username:</strong>
-            <%= username %>
-        </p>
+        <section class="profile-card">
 
-        <p>
-            <strong>Joined:</strong>
-            <%= joinDate %>
-        </p>
+            <div class="profile-avatar">
+                <span>
+                    <%= username.charAt(0).toUpperCase() %>
+                </span>
+            </div>
+
+            <div class="profile-content">
+
+                <h2>My Profile</h2>
+
+                <p class="profile-subtitle">
+                    Your account information
+                </p>
+
+                <div class="profile-information">
+
+                    <div class="profile-item">
+
+                        <span class="profile-label">
+                            Username
+                        </span>
+
+                        <span class="profile-value">
+                            <%= username %>
+                        </span>
+
+                    </div>
+
+                    <div class="profile-item">
+
+                        <span class="profile-label">
+                            Joined
+                        </span>
+
+                        <span class="profile-value">
+                            <%= joinDate %>
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="profile-actions">
+
+                    <a href="/dashboard" class="profile-button">
+                        Back to Chat
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
 
     </main>
 
 </body>
+
 </html>

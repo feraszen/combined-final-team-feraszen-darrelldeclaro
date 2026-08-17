@@ -1,23 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
 
-    <div class="main-content">
-        <h1>Sign Up</h1>
-        <form action="/signup" method="post" style="width: 300px;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign Up</title>
+
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body class="page-signup">
+
+    <main class="main-content">
+
+        <div class="auth-card">
+
+            <h1>Sign Up</h1>
+
             <% if (errorMessage) { %>
-                <p class="error-message"><%= errorMessage %></p>
+                <p class="error-message">
+                    <%= errorMessage %>
+                </p>
             <% } %>
-            <div class="form-input-container">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-input-container">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" class="action-button full-width">Sign Up</button>
-        </form>
-        <p style="font-size: 16px; margin-top: 30px;">
-            Already have an account?&nbsp;
-            <a href="/login" class="register-link">Log in!</a>
-        </p>
-    </div>
-    
+
+            <form action="/signup" method="post">
+
+                <div class="form-input-container">
+                    <label for="username">
+                        Username:
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        required
+                    >
+                </div>
+
+                <div class="form-input-container">
+                    <label for="password">
+                        Password:
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        required
+                    >
+                </div>
+
+                <button
+                    type="submit"
+                    class="action-button full-width"
+                >
+                    Sign Up
+                </button>
+
+            </form>
+
+            <p class="auth-link">
+                Already have an account?
+                <a href="/login">Log in!</a>
+            </p>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

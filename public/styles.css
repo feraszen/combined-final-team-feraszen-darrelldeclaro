@@ -1,92 +1,1192 @@
+/* =========================================================
+   FINAL SPRINT - SOCKET CHAT
+   Global Visual Identity
+   ========================================================= */
+/* ---------------------------------------------------------
+   1. GLOBAL RESET
+   --------------------------------------------------------- */
+* {
+    box-sizing: border-box;
+}
+html,
 body {
-    background: linear-gradient(90deg, rgba(93,142,251,1) 0%, rgba(93,142,251,1) 30%, rgba(0,212,255,1) 100%);
-    height: 100%;
-    padding: 0px;
-    margin: 0px;
-    font-family: 'Lato', sans-serif;
-    display: flex;
-    color: #F6F6F6;
-    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
 }
-
-body .main-content, body header {
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #172033;
+    background: #f4f7fb;
+    line-height: 1.5;
+}
+a {
+    color: inherit;
+}
+button,
+input {
+    font: inherit;
+}
+/* =========================================================
+   2. HOME PAGE
+   ========================================================= */
+body.page-home {
+    min-height: 100vh;
+    background: linear-gradient(
+        135deg,
+        #5d8efb 0%,
+        #4f9df5 45%,
+        #00b8df 100%
+    );
+}
+/* Unauthenticated Home */
+body.page-home .main-content {
+    min-height: 100vh;
+    width: 100%;
     display: flex !important;
-}
-
-.main-content {
-    display: flex;
     justify-content: center;
-    flex: 1;
     align-items: center;
     flex-direction: column;
+    padding: 40px 20px;
+    text-align: center;
+    color: #ffffff;
 }
-
-.main-content h1 {
-    font-size: 50px;
+body.page-home .main-content h1 {
+    margin: 0 0 18px;
+    font-size: clamp(38px, 5vw, 64px);
+    font-weight: 800;
+    letter-spacing: -1px;
 }
-
-.main-content ul {
-    margin: 0px;
+body.page-home .main-content p {
+    margin: 10px 0;
+    font-size: 17px;
+}
+body.page-home #online-users {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 42px;
+    height: 32px;
+    padding: 0 12px;
+    margin-left: 6px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.25);
+    font-weight: 700;
+}
+body.page-home .main-content > p:last-child {
+    margin-top: 28px;
+}
+body.page-home .main-content > p:last-child a {
+    text-decoration: none;
+}
+body.page-home .main-content button {
+    min-width: 130px;
+    margin: 0 7px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #4f7ff2;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+body.page-home .main-content button:hover {
+    background: #f7f9ff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+/* =========================================================
+   3. LOGIN PAGE
+   ========================================================= */
+body.page-login {
+    min-height: 100vh;
+    background: linear-gradient(
+        135deg,
+        #5d8efb 0%,
+        #4f9df5 45%,
+        #00b8df 100%
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+}
+body.page-login h1 {
+    width: 420px;
+    max-width: 100%;
+    margin: 0;
+    padding: 34px 32px 0;
+    background: #ffffff;
+    border-radius: 22px 22px 0 0;
+    text-align: center;
+    color: #172033;
+    font-size: 34px;
+    font-weight: 800;
+}
+body.page-login form {
+    width: 420px !important;
+    max-width: 100%;
+    margin: 0;
+    padding: 20px 32px 0;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+body.page-login form > div {
+    margin-bottom: 18px;
+}
+body.page-login label {
+    display: block;
+    margin-bottom: 7px;
+    color: #172033;
+    font-size: 14px;
+    font-weight: 700;
+}
+body.page-login input {
+    width: 100%;
+    min-height: 46px;
+    padding: 11px 13px;
+    border: 1px solid #d8e0ec;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #172033;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+body.page-login input:focus {
+    border-color: #5d8efb;
+    box-shadow: 0 0 0 3px rgba(93, 142, 251, 0.15);
+}
+body.page-login button {
+    width: 100%;
+    min-height: 46px;
+    border: none;
+    border-radius: 8px;
+    background: #5d8efb;
+    color: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+body.page-login button:hover {
+    background: #4c7ce8;
+    transform: translateY(-1px);
+}
+body.page-login > p {
+    width: 420px;
+    max-width: 100%;
+    margin: 0;
+    padding: 25px 32px 32px;
+    background: #ffffff;
+    border-radius: 0 0 22px 22px;
+    text-align: center;
+    color: #667085;
+}
+body.page-login > p a {
+    color: #4f7ff2;
+    text-decoration: none;
+    font-weight: 700;
+}
+body.page-login > p a:hover {
+    text-decoration: underline;
+}
+/* =========================================================
+   4. SIGNUP PAGE
+   ========================================================= */
+body.page-signup {
+    min-height: 100vh;
+    background: linear-gradient(
+        135deg,
+        #5d8efb 0%,
+        #4f9df5 45%,
+        #00b8df 100%
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+}
+/*
+   Signup currently uses .main-content,
+   therefore all styles are scoped to .page-signup.
+*/
+body.page-signup .main-content {
+    width: 420px;
+    max-width: 100%;
+    padding: 35px 32px;
+    background: #ffffff;
+    border-radius: 22px;
+    color: #172033;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+body.page-signup .main-content h1 {
+    margin: 0 0 28px;
+    text-align: center;
+    color: #172033;
+    font-size: 34px;
+    font-weight: 800;
+}
+body.page-signup .main-content form {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    font-size: 15px;
+}
+body.page-signup .form-input-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 18px;
+}
+body.page-signup .form-input-container label {
+    margin: 0 0 7px;
+    color: #172033;
+    font-size: 14px;
+    font-weight: 700;
+}
+body.page-signup .form-input-container input {
+    width: 100%;
+    min-height: 46px;
+    padding: 11px 13px;
+    border: 1px solid #d8e0ec;
+    border-radius: 8px;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+body.page-signup .form-input-container input:focus {
+    border-color: #5d8efb;
+    box-shadow: 0 0 0 3px rgba(93, 142, 251, 0.15);
+}
+body.page-signup .main-content button {
+    width: 100%;
+    min-height: 46px;
+    border: none;
+    border-radius: 8px;
+    background: #5d8efb;
+    color: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+body.page-signup .main-content button:hover {
+    background: #4c7ce8;
+    transform: translateY(-1px);
+}
+body.page-signup .error-message {
+    margin: 0 0 18px;
+    padding: 11px 13px;
+    border-radius: 8px;
+    background: #fff0f0;
+    color: #d92d20;
+    font-size: 14px;
+    font-weight: 600;
+}
+body.page-signup .main-content > p {
+    color: #667085;
+    text-align: center;
+}
+body.page-signup .main-content > p a {
+    color: #4f7ff2;
+    text-decoration: none;
+    font-weight: 700;
+}
+body.page-signup .main-content > p a:hover {
+    text-decoration: underline;
+}
+/* =========================================================
+   5. LOGGED-IN HEADER
+   ========================================================= */
+body.page-chat header,
+body.page-home header,
+body:not(.page-home):not(.page-login):not(.page-signup):not(.page-chat) header {
+    width: 100%;
+    min-height: 64px;
+    margin: 0;
+    padding: 0 28px;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    border-bottom: 1px solid #e4e9f1;
+    color: #172033;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    position: relative;
+    z-index: 10;
+}
+header h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 800;
+    color: #172033;
+}
+header nav {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+header nav a {
+    padding: 8px 11px;
+    color: #5d6b82;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    transition: color 0.2s ease;
+}
+header nav a:hover {
+    color: #5d8efb;
+}
+header nav form {
+    margin: 0;
+}
+header nav form button {
+    margin-left: 8px;
+    padding: 8px 13px;
+    border: none;
+    border-radius: 8px;
+    background: #fff0f0;
+    color: #e5484d;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+header nav form button:hover {
+    background: #ffe0e0;
+    color: #c9363b;
+}
+/* Remove the old visual separator */
+body.page-chat header + hr,
+body:not(.page-home):not(.page-login):not(.page-signup):not(.page-chat) header + hr {
+    display: none;
+}
+/* =========================================================
+   6. CHAT PAGE
+   ========================================================= */
+body.page-chat {
+    min-height: 100vh;
+    background: #f4f7fb;
+    color: #172033;
+    display: block;
+}
+/* =========================================================
+   CHAT MAIN LAYOUT
+   ========================================================= */
+body.page-chat main {
+    width: min(1280px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 40px 0 60px;
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 32px;
+    row-gap: 20px;
+}
+/* =========================================================
+   USERS ONLINE
+   ========================================================= */
+body.page-chat main > section:first-child {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e3e9f2;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(27, 43, 68, 0.06);
+    align-self: start;
+}
+body.page-chat main > section:first-child h2 {
+    margin: 0 0 20px;
+    font-size: 22px;
+    font-weight: 800;
+}
+body.page-chat #connection-status {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 14px;
+    padding: 9px 12px;
+    border-radius: 20px;
+    background: #e9f9f2;
+    color: #139b68;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+}
+body.page-chat #user-list {
+    width: 100%;
+    margin: 0;
     padding: 0;
     list-style: none;
 }
-
-.main-content li {
-    font-size: 20px;
+body.page-chat #user-list li {
+    margin-bottom: 8px;
+    padding: 11px 13px;
+    background: #f7f9fc;
+    border: 1px solid #e5eaf2;
+    border-radius: 10px;
+    font-size: 14px;
+    word-break: break-word;
 }
-
-.main-content form {
-    font-size: 18px;
+body.page-chat #user-list li::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: #20b77a;
+    vertical-align: middle;
+}
+/* =========================================================
+   CHAT MESSAGES PANEL
+   ========================================================= */
+body.page-chat main > section:nth-of-type(2) {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 30px;
+    background: #ffffff;
+    border: 1px solid #e3e9f2;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(27, 43, 68, 0.06);
+}
+body.page-chat main > section:nth-of-type(2) h2 {
+    margin: 0 0 6px;
+    font-size: 24px;
+    font-weight: 800;
+}
+body.page-chat main > section:nth-of-type(2)::before {
+    content: "Real-time conversation";
+    display: block;
+    margin-bottom: 20px;
+    color: #667085;
+    font-size: 14px;
+}
+/* =========================================================
+   CHAT MESSAGE CONTAINER
+   ========================================================= */
+body.page-chat #chat-messages {
+    width: 180% !important;
+    height: 560px !important;
+    box-sizing: border-box;
+    padding: 22px !important;
+    overflow-y: auto;
+    border: 1px solid #dce4ef !important;
+    border-radius: 14px;
+    background: #f7f9fc;
+    scrollbar-width: thin;
+}
+/* =========================================================
+   INDIVIDUAL MESSAGES
+   ========================================================= */
+body.page-chat #chat-messages > div {
+    width: fit-content;
+    max-width: 75%;
+    margin: 0 0 14px;
+    padding: 13px 16px;
+    background: #ffffff;
+    border: 1px solid #e3e9f2;
+    border-radius: 13px;
+    box-shadow: 0 3px 10px rgba(27, 43, 68, 0.05);
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+body.page-chat #chat-messages > div strong {
+    color: #4f7ff2;
+    font-weight: 800;
+}
+body.page-chat #chat-messages > div span {
+    color: #172033;
+}
+body.page-chat #chat-messages > div small {
+    display: block;
+    margin-top: 5px;
+    color: #8a96a8;
+    font-size: 11px;
+}
+/* =========================================================
+   EMPTY CHAT
+   ========================================================= */
+body.page-chat #chat-messages > p {
+    width: fit-content;
+    max-width: 260px;
+    margin: 60px auto;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e3e9f2;
+    border-radius: 12px;
+    color: #667085;
+    text-align: center;
+    line-height: 1.6;
+    box-shadow: 0 3px 10px rgba(27, 43, 68, 0.05);
+}
+/* =========================================================
+   REMOVE HR ONLY FROM CHAT
+   ========================================================= */
+body.page-chat main > hr {
+    display: none;
+}
+/* =========================================================
+   MESSAGE FORM
+   ========================================================= */
+body.page-chat main > section:nth-of-type(3) {
+    grid-column: 2;
+    grid-row: 2;
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+body.page-chat #message-form {
+    width: 100%;
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto minmax(300px, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+}
+/* Message label */
+body.page-chat #message-form label {
+    margin: 0;
+    color: #172033;
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+/* =========================================================
+   MESSAGE INPUT
+   ========================================================= */
+body.page-chat #message-input {
+    width: 100% !important;
+    min-width: 300px;
+    height: 54px;
+    box-sizing: border-box;
+    padding: 12px 16px;
+    border: 1px solid #d6dfeb;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #172033;
+    font-size: 16px;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+body.page-chat #message-input:focus {
+    border-color: #5d8efb;
+    box-shadow:
+        0 0 0 3px rgba(93, 142, 251, 0.15);
+}
+body.page-chat #message-input::placeholder {
+    color: #98a2b3;
+}
+/* =========================================================
+   SEND BUTTON
+   ========================================================= */
+body.page-chat #message-form button {
+    height: 54px;
+    min-width: 110px;
+    padding: 0 24px;
+    border: none;
+    border-radius: 10px;
+    background: #5d8efb;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+body.page-chat #message-form button:hover {
+    background: #4c7ce8;
+    transform: translateY(-1px);
+}
+/* =========================================================
+   CHAT RESPONSIVE
+   ========================================================= */
+@media (max-width: 900px) {
+    body.page-chat main {
+        width: min(720px, calc(100% - 32px));
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        column-gap: 0;
+    }
+    body.page-chat main > section:first-child {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    body.page-chat main > section:nth-of-type(2) {
+        grid-column: 1;
+        grid-row: 2;
+        padding: 24px;
+    }
+    body.page-chat main > section:nth-of-type(3) {
+        grid-column: 1;
+        grid-row: 3;
+    }
+    body.page-chat #chat-messages {
+        height: 500px !important;
+    }
+    body.page-chat #message-form {
+        grid-template-columns: auto minmax(0, 1fr) auto;
+    }
+    body.page-chat #message-input {
+        min-width: 0;
+    }
+}
+/* =========================================================
+   MOBILE
+   ========================================================= */
+@media (max-width: 600px) {
+    body.page-chat main {
+        width: calc(100% - 24px);
+        padding: 24px 0 40px;
+    }
+    body.page-chat main > section:first-child {
+        padding: 20px;
+    }
+    body.page-chat main > section:nth-of-type(2) {
+        padding: 18px;
+    }
+    body.page-chat #chat-messages {
+        height: 420px !important;
+        padding: 16px !important;
+    }
+    body.page-chat #chat-messages > div {
+        max-width: 90%;
+    }
+    body.page-chat #message-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    body.page-chat #message-form label {
+        width: 100%;
+    }
+    body.page-chat #message-input {
+        flex: 1;
+        width: auto !important;
+        min-width: 0;
+        height: 52px;
+    }
+    body.page-chat #message-form button {
+        height: 52px;
+        min-width: 100px;
+    }
+}
+/* =========================================================
+   7. PROFILE PAGE
+   ========================================================= */
+body.page-profile {
+    min-height: 100vh;
+    background: #f4f7fb;
+    color: #172033;
+    display: block;
+}
+/* Profile main container */
+body.page-profile main {
+    width: min(900px, calc(100% - 48px));
+    min-height: calc(100vh - 160px);
+    margin: 0 auto;
+    padding: 50px 0;
+    box-sizing: border-box;
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    justify-content: center;
+    align-items: flex-start;
 }
-
-.main-content form .form-input-container {
+/* Profile card */
+body.page-profile .profile-card {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 40px;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid #e3e9f2;
+    border-radius: 22px;
+    box-shadow: 0 12px 35px rgba(27, 43, 68, 0.08);
+}
+/* Profile avatar */
+body.page-profile .profile-avatar {
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(
+        135deg,
+        #5d8efb,
+        #4c7ce8
+    );
+    color: #ffffff;
+    box-shadow:
+        0 8px 20px rgba(93, 142, 251, 0.25);
 }
-
-.main-content form label {
-    margin-right: 5px;
+body.page-profile .profile-avatar span {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1;
 }
-
-.main-content form input {
-    border-radius: 5px;
-    padding: 5px;
-    font-size: 14px;
-    width: calc(100% - 5px *2);
-    min-height: 2em;
+/* Profile content */
+body.page-profile .profile-content {
+    flex: 1;
+    min-width: 0;
 }
-
-.main-content button {
-    border: none;
-    background: #F6F6F6;
-    padding: 6px;
-    border-radius: 5px;
-    cursor: pointer;
+body.page-profile .profile-content h2 {
+    margin: 0;
+    color: #172033;
+    font-size: 30px;
+    font-weight: 800;
 }
-.main-content .button-container {
+body.page-profile .profile-subtitle {
+    margin: 8px 0 30px;
+    color: #667085;
+    font-size: 15px;
+}
+/* Profile information */
+body.page-profile .profile-information {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    gap: 14px;
+}
+body.page-profile .profile-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 20px;
-    margin-top: 20px;
+    padding: 17px 20px;
+    background: #f7f9fc;
+    border: 1px solid #e5eaf2;
+    border-radius: 12px;
 }
-
-.action-button {
-    background: #F6F6F6;
-    color: #5D8EFB;
+body.page-profile .profile-label {
+    color: #667085;
+    font-size: 14px;
+    font-weight: 700;
+}
+body.page-profile .profile-value {
+    color: #172033;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+/* Profile action */
+body.page-profile .profile-actions {
+    margin-top: 28px;
+    display: flex;
+    justify-content: flex-start;
+}
+body.page-profile .profile-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 22px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background: #5d8efb;
+    color: #ffffff;
     text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 18px;
-    text-align: center;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 14px;
+    font-weight: 700;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
-
-.action-button:hover {
-    background: rgba(246, 246, 246, 0.8);
-    color: rgba(93, 142, 251, 0.8);
+body.page-profile .profile-button:hover {
+    background: #4c7ce8;
+    transform: translateY(-1px);
+    box-shadow:
+        0 6px 16px rgba(93, 142, 251, 0.25);
+}
+/* =========================================================
+   PROFILE RESPONSIVE
+   ========================================================= */
+@media (max-width: 700px) {
+    body.page-profile main {
+        width: calc(100% - 28px);
+        padding: 30px 0;
+    }
+    body.page-profile .profile-card {
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+        padding: 30px 22px;
+    }
+    body.page-profile .profile-content {
+        width: 100%;
+        text-align: center;
+    }
+    body.page-profile .profile-content h2 {
+        font-size: 26px;
+    }
+    body.page-profile .profile-information {
+        text-align: left;
+    }
+    body.page-profile .profile-actions {
+        justify-content: center;
+    }
+    body.page-profile .profile-button {
+        width: 100%;
+    }
+}
+@media (max-width: 450px) {
+    body.page-profile main {
+        width: calc(100% - 20px);
+    }
+    body.page-profile .profile-card {
+        padding: 24px 16px;
+    }
+    body.page-profile .profile-avatar {
+        width: 100px;
+        height: 100px;
+    }
+    body.page-profile .profile-avatar span {
+        font-size: 40px;
+    }
+    body.page-profile .profile-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+    body.page-profile .profile-value {
+        text-align: left;
+    }
+}
+/* =========================================================
+   8. ADMIN DASHBOARD
+   IMPORTANT:
+   Everything below is scoped ONLY to .page-admin
+   ========================================================= */
+body.page-admin {
+    min-height: 100vh;
+    background: #f4f7fb;
+    color: #172033;
+}
+/* Admin Main Content */
+body.page-admin main {
+    width: min(1100px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 40px 0 70px;
+}
+/* Registered Users Heading */
+body.page-admin main > h2 {
+    margin: 0 0 24px;
+    color: #172033;
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+/* =========================================================
+   USERS TABLE
+   ========================================================= */
+body.page-admin main table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #ffffff;
+    border: 1px solid #dfe6f0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(27, 43, 68, 0.07);
+}
+/* Table Header */
+body.page-admin main table thead {
+    background: #f7f9fc;
+}
+body.page-admin main table th {
+    padding: 17px 18px;
+    color: #172033;
+    font-size: 14px;
+    font-weight: 800;
+    text-align: left;
+    border-bottom: 1px solid #dfe6f0;
+}
+/* Table Cells */
+body.page-admin main table td {
+    padding: 18px;
+    color: #344054;
+    font-size: 14px;
+    border-bottom: 1px solid #e8edf4;
+    vertical-align: middle;
+}
+/* Remove Border From Last Row */
+body.page-admin main table tbody tr:last-child td {
+    border-bottom: none;
+}
+/* Row Hover */
+body.page-admin main table tbody tr {
+    transition: background 0.2s ease;
+}
+body.page-admin main table tbody tr:hover {
+    background: #f9fbff;
+}
+/* Username */
+body.page-admin main table td:first-child {
+    color: #172033;
+    font-weight: 600;
+}
+/* Role */
+body.page-admin main table td:nth-child(2) {
+    color: #667085;
+}
+/* Join Date */
+body.page-admin main table td:nth-child(3) {
+    color: #667085;
+    white-space: nowrap;
+}
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+/* View Profile */
+body.page-admin main table a {
+    display: inline-block;
+    color: #4f7ff2;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+body.page-admin main table a:hover {
+    color: #315fd4;
+    text-decoration: underline;
+}
+/* Action Column */
+body.page-admin main table td:last-child {
+    white-space: nowrap;
+}
+/* Delete Form */
+body.page-admin main table td:last-child form {
+    display: inline-block;
+    margin: 0 0 0 10px;
+}
+/* Remove Button */
+body.page-admin main table td:last-child form button {
+    min-width: 78px;
+    padding: 9px 14px;
+    border: none;
+    border-radius: 9px;
+    background: #fff0f0;
+    color: #e53935;
+    font-size: 13px;
+    font-weight: 700;
     cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+body.page-admin main table td:last-child form button:hover {
+    background: #ffe0e0;
+    color: #c62828;
+    transform: translateY(-1px);
+}
+/* =========================================================
+   EMPTY USERS MESSAGE
+   ========================================================= */
+body.page-admin main > p {
+    margin: 0;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #dfe6f0;
+    border-radius: 14px;
+    color: #667085;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(27, 43, 68, 0.05);
+}
+/* =========================================================
+   RESPONSIVE ADMIN TABLE
+   ========================================================= */
+@media (max-width: 800px) {
+    body.page-admin main {
+        width: min(100% - 28px, 1100px);
+        padding-top: 28px;
+    }
+    body.page-admin main > h2 {
+        font-size: 24px;
+    }
+    body.page-admin main table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    body.page-admin main table th,
+    body.page-admin main table td {
+        padding: 14px;
+    }
+}
+/* =========================================================
+   MOBILE ADMIN
+   ========================================================= */
+@media (max-width: 600px) {
+    body.page-admin main {
+        width: calc(100% - 20px);
+        padding: 24px 0 50px;
+    }
+    body.page-admin main > h2 {
+        margin-bottom: 18px;
+        font-size: 22px;
+    }
+    body.page-admin main table th,
+    body.page-admin main table td {
+        padding: 12px;
+        font-size: 13px;
+    }
+    body.page-admin main table td:last-child form {
+        margin-left: 6px;
+    }
+    body.page-admin main table td:last-child form button {
+        min-width: 70px;
+        padding: 8px 11px;
+    }
+}
+/* =========================================================
+   9. RESPONSIVE DESIGN
+   ========================================================= */
+@media (max-width: 800px) {
+    /* Header */
+    header {
+        min-height: auto !important;
+        padding: 16px 18px !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px;
+    }
+    header nav {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    header nav a {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+    /* Chat */
+    body.page-chat main {
+        width: min(100% - 28px, 650px);
+        padding: 25px 0 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+    body.page-chat main > section:first-child {
+        width: 100%;
+    }
+    body.page-chat main > section:nth-of-type(2) {
+        width: 100%;
+    }
+    body.page-chat main > section:nth-of-type(3) {
+        width: 100%;
+    }
+    body.page-chat #chat-messages {
+        height: 420px !important;
+    }
+    body.page-chat #message-form {
+        grid-template-columns: 1fr auto;
+    }
+    body.page-chat #message-form label {
+        grid-column: 1 / -1;
+    }
+    body.page-chat #message-input {
+        grid-column: 1;
+    }
+    body.page-chat #message-form button {
+        grid-column: 2;
+    }
+    /* Admin */
+    body:not(.page-home):not(.page-login):not(.page-signup):not(.page-chat) main {
+        width: calc(100% - 28px);
+        overflow-x: auto;
+    }
+    body:not(.page-home):not(.page-login):not(.page-signup):not(.page-chat) main table {
+        min-width: 700px;
+    }
+}
+@media (max-width: 520px) {
+    /* Home */
+    body.page-home .main-content h1 {
+        font-size: 38px;
+    }
+    body.page-home .main-content button {
+        display: block;
+        width: 220px;
+        margin: 10px auto;
+    }
+    /* Login */
+    body.page-login {
+        padding: 20px 14px;
+    }
+    body.page-login h1 {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+    body.page-login form {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+    body.page-login > p {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+    /* Signup */
+    body.page-signup {
+        padding: 20px 14px;
+    }
+    body.page-signup .main-content {
+        padding: 28px 22px;
+    }
+    /* Chat */
+    body.page-chat main {
+        width: calc(100% - 20px);
+    }
+    body.page-chat main > section:first-child,
+    body.page-chat main > section:nth-of-type(2) {
+        padding: 18px;
+    }
+    body.page-chat #chat-messages {
+        height: 380px !important;
+        padding: 12px !important;
+    }
+    body.page-chat #chat-messages > div {
+        max-width: 92%;
+    }
+    body.page-chat #message-form {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+    body.page-chat #message-form label,
+    body.page-chat #message-input,
+    body.page-chat #message-form button {
+        grid-column: 1;
+        width: 100%;
+    }
 }
